@@ -7,14 +7,20 @@ from django.conf import settings
 
 def health(request):
     import os
+    from pathlib import Path
+    app = Path('/app')
     return JsonResponse({
         'status': 'ok',
         'BASE_DIR': str(settings.BASE_DIR),
-        'STATIC_ROOT': str(settings.STATIC_ROOT),
-        'WHITENOISE_ROOT': str(settings.WHITENOISE_ROOT),
         'cwd': os.getcwd(),
-        'static_root_exists': settings.STATIC_ROOT.exists(),
-        'whitenoise_root_exists': settings.WHITENOISE_ROOT.exists(),
+        'app_ls': sorted(p.name + ('/' if p.is_dir() else '') for p in app.iterdir()),
+        'backend_exists': (app / 'backend').exists(),
+        'project_at_app': (app / 'project').exists(),
+        'manage_at_app': (app / 'manage.py').exists(),
+        'manage_at_app_backend': (app / 'backend' / 'manage.py').exists(),
+        'staticfiles_at_app': (app / 'staticfiles').exists(),
+        'staticfiles_at_app_backend': (app / 'backend' / 'staticfiles').exists(),
+        'PYTHONPATH': os.environ.get('PYTHONPATH', '(not set)'),
     })
 
 
