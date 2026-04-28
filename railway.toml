@@ -3,6 +3,6 @@ builder = "dockerfile"
 dockerfilePath = "Dockerfile"
 
 [deploy]
-preDeployCommand = "python /app/backend/manage.py migrate && python /app/backend/manage.py createsuperuser --noinput --username nicki --email nicki@example.com"
+preDeployCommand = "python /app/backend/manage.py migrate && python /app/backend/manage.py createsuperuser --noinput --username Darren --email darren@example.com"
 startCommand = "sh -c 'gunicorn project.wsgi:application --bind 0.0.0.0:$PORT'"
 healthcheckPath = "/health/"
