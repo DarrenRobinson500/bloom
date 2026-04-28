@@ -12,6 +12,8 @@ _extra_hosts = os.environ.get('ALLOWED_HOSTS', '')
 if _extra_hosts:
     ALLOWED_HOSTS += [h.strip() for h in _extra_hosts.split(',') if h.strip()]
 
+CSRF_TRUSTED_ORIGINS = ['https://web-production-424a2.up.railway.app']
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
