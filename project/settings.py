@@ -85,7 +85,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 # WhiteNoise serves the React build from root-level URLs (e.g. /assets/..., /index.html)
 WHITENOISE_ROOT = BASE_DIR / 'staticfiles' / 'frontend'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
