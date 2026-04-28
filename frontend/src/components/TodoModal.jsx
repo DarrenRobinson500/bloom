@@ -9,12 +9,14 @@ export default function TodoModal({ todo, onClose }) {
     due_date: todo?.due_date ?? '',
   });
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
 
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
 
   const save = async (e) => {
     e.preventDefault();
     setSaving(true);
+    setError('');
     try {
       const payload = { ...form, due_date: form.due_date || null };
       if (isEdit) {
@@ -23,6 +25,9 @@ export default function TodoModal({ todo, onClose }) {
         await todosApi.create(payload);
       }
       onClose();
+    } catch (err) {
+      const detail = err.response?.data;
+      setError(detail ? JSON.stringify(detail) : 'Save failed — please try again.');
     } finally {
       setSaving(false);
     }
@@ -70,6 +75,7 @@ export default function TodoModal({ todo, onClose }) {
               className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
             />
           </div>
+          {error && <p className="text-sm text-red-600">{error}</p>}
           <div className="flex gap-2 pt-2">
             {isEdit && (
               <button
