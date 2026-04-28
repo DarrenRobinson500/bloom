@@ -1,7 +1,9 @@
 FROM python:3.11-slim
 
 ENV PYTHONUNBUFFERED=1 \
-    PORT=8080
+    PORT=8080 \
+    PYTHONPATH=/app/backend \
+    DJANGO_SETTINGS_MODULE=project.settings
 
 RUN apt-get update && apt-get install -y --no-install-recommends curl \
     && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
