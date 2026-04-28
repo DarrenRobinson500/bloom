@@ -6,7 +6,16 @@ from django.conf import settings
 
 
 def health(request):
-    return JsonResponse({'status': 'ok'})
+    import os
+    return JsonResponse({
+        'status': 'ok',
+        'BASE_DIR': str(settings.BASE_DIR),
+        'STATIC_ROOT': str(settings.STATIC_ROOT),
+        'WHITENOISE_ROOT': str(settings.WHITENOISE_ROOT),
+        'cwd': os.getcwd(),
+        'static_root_exists': settings.STATIC_ROOT.exists(),
+        'whitenoise_root_exists': settings.WHITENOISE_ROOT.exists(),
+    })
 
 
 def serve_spa(request):
