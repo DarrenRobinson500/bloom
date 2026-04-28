@@ -3,5 +3,5 @@ builder = "dockerfile"
 dockerfilePath = "Dockerfile"
 
 [deploy]
-startCommand = "python manage.py migrate && gunicorn project.wsgi --bind 0.0.0.0:$PORT"
+startCommand = "python /app/backend/manage.py migrate && gunicorn project.wsgi:application --chdir /app/backend --bind 0.0.0.0:$PORT"
 healthcheckPath = "/health/"
