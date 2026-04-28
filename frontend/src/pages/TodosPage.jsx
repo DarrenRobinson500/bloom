@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { todosApi } from '../api/client';
+import TodoModal from '../components/TodoModal';
 
-export default function TodosPage({ openTodoModal }) {
+export default function TodosPage() {
   const [todos, setTodos] = useState([]);
+  const [modalTodo, setModalTodo] = useState(undefined);
 
   const load = () =>
     todosApi.list().then((res) => setTodos(res.data)).catch(() => {});
@@ -19,6 +21,8 @@ export default function TodosPage({ openTodoModal }) {
     load();
   };
 
+  const handleClose = () => { setModalTodo(undefined); load(); };
+
   const pending = todos.filter((t) => !t.completed);
   const done = todos.filter((t) => t.completed);
 
@@ -27,7 +31,7 @@ export default function TodosPage({ openTodoModal }) {
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-semibold text-gray-800">Todos</h2>
         <button
-          onClick={() => openTodoModal()}
+          onClick={() => setModalTodo(null)}
           className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 text-sm font-medium"
         >
           + New Todo
@@ -41,7 +45,7 @@ export default function TodosPage({ openTodoModal }) {
       {pending.length > 0 && (
         <div className="mb-6 space-y-2">
           {pending.map((todo) => (
-            <TodoRow key={todo.id} todo={todo} onToggle={toggle} onEdit={openTodoModal} onDelete={remove} />
+            <TodoRow key={todo.id} todo={todo} onToggle={toggle} onEdit={setModalTodo} onDelete={remove} />
           ))}
         </div>
       )}
@@ -51,10 +55,13 @@ export default function TodosPage({ openTodoModal }) {
           <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-2">Completed</h3>
           <div className="space-y-2 opacity-60">
             {done.map((todo) => (
-              <TodoRow key={todo.id} todo={todo} onToggle={toggle} onEdit={openTodoModal} onDelete={remove} />
+              <TodoRow key={todo.id} todo={todo} onToggle={toggle} onEdit={setModalTodo} onDelete={remove} />
             ))}
           </div>
         </>
+      )}
+      {modalTodo !== undefined && (
+        <TodoModal todo={modalTodo} onClose={handleClose} />
       )}
     </div>
   );

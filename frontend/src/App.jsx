@@ -8,7 +8,6 @@ import InquiriesPage from './pages/InquiriesPage';
 import InquiryDetailPage from './pages/InquiryDetailPage';
 import LoginPage from './pages/LoginPage';
 import EventModal from './components/EventModal';
-import TodoModal from './components/TodoModal';
 
 function ProtectedRoute({ children }) {
   const { authed } = useAuth();
@@ -23,14 +22,9 @@ export default function App() {
   const hideNav = location.pathname === '/' || location.pathname === '/login';
 
   const [eventModal, setEventModal] = useState({ open: false, event: null, defaultDate: null });
-  const [todoModal, setTodoModal] = useState({ open: false, todo: null });
-
   const openEventModal = (event = null, defaultDate = null) =>
     setEventModal({ open: true, event, defaultDate });
   const closeEventModal = () => setEventModal({ open: false, event: null, defaultDate: null });
-
-  const openTodoModal = (todo = null) => setTodoModal({ open: true, todo });
-  const closeTodoModal = () => setTodoModal({ open: false, todo: null });
 
   const navLink = ({ isActive }) =>
     `px-4 py-2 rounded-md text-sm font-medium transition-colors ${
@@ -79,7 +73,7 @@ export default function App() {
           />
           <Route
             path="/todos"
-            element={<TodosPage openTodoModal={openTodoModal} />}
+            element={<TodosPage />}
           />
           <Route
             path="/inquiries"
@@ -98,9 +92,6 @@ export default function App() {
           defaultDate={eventModal.defaultDate}
           onClose={closeEventModal}
         />
-      )}
-      {todoModal.open && (
-        <TodoModal todo={todoModal.todo} onClose={closeTodoModal} />
       )}
     </div>
   );
