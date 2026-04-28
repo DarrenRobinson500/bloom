@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-local-dev-only-change-this')
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'healthcheck.railway.app']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'healthcheck.railway.app', 'web-production-424a2.up.railway.app']
 _extra_hosts = os.environ.get('ALLOWED_HOSTS', '')
 if _extra_hosts:
     ALLOWED_HOSTS += [h.strip() for h in _extra_hosts.split(',') if h.strip()]
